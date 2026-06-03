@@ -1,37 +1,21 @@
-import requests
 import pandas as pd
+import os
 
-funds = {
-    "HDFC_Top100": 125497,
-    "SBI_Bluechip": 119551,
-    "ICICI_Bluechip": 120503,
-    "Nippon_LargeCap": 118632,
-    "Axis_Bluechip": 119092,
-    "Kotak_Bluechip": 120841
-}
+data_path = "data/raw"
 
-all_data = []
+csv_files = [f for f in os.listdir(data_path) if f.endswith(".csv")]
 
-for name, code in funds.items():
-    url = f"https://api.mfapi.in/mf/{code}"
-    response = requests.get(url)
-    data = response.json()
+print("CSV Files Found:", csv_files)
+print("Total Files:", len(csv_files))
 
-    df = pd.DataFrame(data["data"])
+for file in csv_files:
+    df = pd.read_csv(os.path.join(data_path, file))
 
-    df["date"] = pd.to_datetime(df["date"], format="%d-%m-%Y")
-    df["nav"] = df["nav"].astype(float)
+    print(f"\nDataset: {file}")
+    print("Shape:", df.shape)
 
-    df["fund_name"] = name
+    print("\nData Types:")
+    print(df.dtypes)
 
-    all_data.append(df)
-
-# combine all funds
-final_df = pd.concat(all_data, ignore_index=True)
-
-print(final_df.head())
-print(final_df.shape)
-print(final_df.dtypes)
-
-# save file
-final_df.to_csv("data/raw/all_mutual_funds.csv", index=False)
+    print("\nFirst 5 Rows:")
+    print(df.head())
