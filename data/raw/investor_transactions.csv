@@ -1,0 +1,22 @@
+tx = pd.read_csv("data/raw/investor_transactions.csv")
+
+# Standardise transaction types
+tx["transaction_type"] = tx["transaction_type"].str.upper().str.strip()
+
+tx["transaction_type"] = tx["transaction_type"].replace({
+    "SIP INSTALLMENT": "SIP",
+    "LUMPSUM INVESTMENT": "LUMPSUM",
+    "REDEEM": "REDEMPTION"
+})
+
+# Validate amount
+tx = tx[tx["amount"] > 0]
+
+# Fix dates
+tx["date"] = pd.to_datetime(tx["date"], errors="coerce")
+
+# KYC validation
+valid_kyc = ["YES", "NO", "VERIFIED", "PENDING"]
+tx = tx[tx["kyc_status"].isin(valid_kyc)]
+
+tx.to_csv("data/processed/investor_transactions_cleaned.csv", index=False)
