@@ -1,0 +1,10 @@
+Mutual Fund Analytics Project - Day 1 Summary
+
+- Successfully fetched 5 mutual fund NAV datasets from mfapi.in API
+- Combined all schemes into a single dataset
+- Performed data cleaning and date formatting
+- No missing values found in dataset
+- Calculated returns and compared performance
+- Identified best performing mutual fund based on NAV growth
+- Built SQL database (nav_history) for structured querying
+- Completed exploratory data analysis with visualizations
