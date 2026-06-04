@@ -1,0 +1,4 @@
+amfi_code,investor_id,date,transaction_type,amount,state,kyc_status
+FUND_A,I1,2024-01-01,SIP,1000,TN,YES
+FUND_A,I2,2024-01-02,LUMPSUM,5000,KA,YES
+FUND_B,I3,2024-01-03,REDEMPTION,2000,MH,VERIFIED
